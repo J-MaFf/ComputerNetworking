@@ -39,7 +39,6 @@ def initiateConnection():
                     break
                 else:
                     game(data, num, conn)
-                #conn.sendall(data)
     
 def game(message, num, conn):
     """
