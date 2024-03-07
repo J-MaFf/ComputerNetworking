@@ -6,9 +6,9 @@ def main():
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         #                     (^ IPV4     ,      ^ TCP)
-        s.bind(HOST, PORT)
+        s.bind((HOST, PORT))
         s.listen()
-        conn, addr = s.accept() 
+        conn, addr = s.accept() # Blocks until a connection is made
         ''' con = new socket object usable to send and receive data
             on the connection, addr = address bound to the socket on
             the other end of the connection
