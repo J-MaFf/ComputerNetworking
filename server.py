@@ -59,9 +59,9 @@ def game(message, num, conn):
         conn.sendall("correct")
         conn.close()
     elif (guess > num):
-        conn.sendall("Too high")
+        conn.sendall("too-high")
     else:
-        conn.sendall("Too low")
+        conn.sendall("too-low")
 
 if __name__ == "__main__": # Only run the code if this file is run directly
     main()
