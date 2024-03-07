@@ -1,4 +1,5 @@
 # server.py
+import math
 import socket
 
 def main():
@@ -24,6 +25,35 @@ def initiateConnection():
                 if not data:
                     break
                 conn.sendall(data)
+    
+def game():
+    num = math.random(1, 100) # Generate a random integer from 1 to 99 (inclusive)
+
+
+''' Create a TCP stream socket bound to 127.0.0.1 and port 7777 to listen for incoming clients
+
+    Loop forever to listen for connections
+
+    Accept an incoming connection, creating a socket for that client
+
+    // Generate a random integer from 1 to 99 (inclusive)
+
+    // Send a 'hello' message to the client
+
+    // Loop forever to receive new messages from this client
+
+    // 		Receive an incoming message and decode it using ASCII encoding
+
+    // 		If the message is a 'quit' message, disconnect from this client and start listening again
+
+    // 		If the message is a 'guess' message, parse the client's guess, then...
+
+    // 			...If their guess matches the answer, send a 'correct' message to them and disconnect from the client
+    
+    // 			...If their guess is greater than the answer, send a 'too-high' message and continue listening
+
+    // 			...If their guess is less than the answer, send a 'too-low' message and continue listening
+	'''
 
 if __name__ == "__main__": # Only run the code if this file is run directly
     main()
