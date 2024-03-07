@@ -2,6 +2,9 @@
 import socket
 
 def main():
+    initiateConnection()
+
+def initiateConnection():
     HOST = "127.0.0.1" # The server's hostname or IP address
     PORT = 7777 # The port used by the server
 
