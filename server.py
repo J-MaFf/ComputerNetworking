@@ -1,5 +1,5 @@
 # server.py
-import math
+import random
 import socket
 
 def main():
@@ -28,16 +28,18 @@ def initiateConnection():
         '''
         with conn:
             print(f"Connected to {addr}")
-            num = math.random(1, 100) # Generate a random integer from 1 to 99 (inclusive)
+            num = random.randint(1,99) # Generate a random integer from 1 to 99 (inclusive)
 
-            conn.sendall(b'hello') # Send a 'hello' message to the client (b = bytes)
+            hello = 'hello\r\n'.encode('ascii') # Create a 'hello' message
+
+            conn.sendall(hello) # Send a 'hello' message to the client (b = bytes)
             while True:
                 data = conn.recv(1024) 
                 if not data:
                     break
                 else:
                     game(data, num, conn)
-                conn.sendall(data)
+                #conn.sendall(data)
     
 def game(message, num, conn):
     """
@@ -50,18 +52,25 @@ def game(message, num, conn):
     """
     message = message.decode('ascii').lower() # Decode the message using ASCII encoding
     # Parse message
-    if (message == "quit"):
-        conn.close()
+    if (message == "quit\r\n"):
+        print("Connection closed by client.")
+        return
     else:
-        guess = int(message) # needs error handling
+        parts = message.split('\t')  # Split the string on the tab character
+        if len(parts) < 2:
+            print("Invalid message format received from client.")
+            return
+        guess_str = parts[1].strip()  # Get the second part and remove any leading/trailing whitespace
+        guess = int(guess_str)  # Convert the string to an integer
     # Compare guess to num
     if (guess == num):
-        conn.sendall("correct")
-        conn.close()
+        conn.sendall("correct\r\n".encode('ascii'))
+        print("Correct guess, connection closing...")
+        return
     elif (guess > num):
-        conn.sendall("too-high")
+        conn.sendall("too-high\r\n".encode('ascii'))
     else:
-        conn.sendall("too-low")
+        conn.sendall("too-low\r\n".encode('ascii'))
 
 if __name__ == "__main__": # Only run the code if this file is run directly
     main()
